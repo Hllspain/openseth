@@ -1,10 +1,12 @@
 import re
+from time import sleep
+
 import discord
 import requests
 
+from discord_webhook import DiscordWebhook, DiscordEmbed
 from yaml import load
-from yaml import CLoader as Loader, CDumper as Dumper
-from pprint import pprint
+from yaml import CLoader as Loader
 
 
 class OpenSethClient(discord.Client):
@@ -42,8 +44,10 @@ class OpenSethClient(discord.Client):
             return
 
         if message.content.startswith('!notify'):
-            await message.reply('Would you like to notify about an event?\nPlease enter event from list:', mention_author=True)
-        
+            data = re.findall('"([^"]*)"', message.content)
+            if data:
+                await message.reply('Would you like to notify about an event?\nPlease enter event from list:', mention_author=True)
+
         elif message.content.startswith('!create'):
             data = re.findall('"([^"]*)"', message.content)
             if len(data) == 3:
@@ -83,15 +87,61 @@ class OpenSethClient(discord.Client):
         print("Remove notification for user_id {}".format(user_id))
 
 
-# This bot requires the members and reactions intents.
-intents = discord.Intents.default()
-intents.members = True
+class WebHookUtils:
+    """" https://github.com/lovvskillz/python-discord-webhook """
+    @staticmethod
+    def send_webhook():
+        webhook = DiscordWebhook(url="your webhook url", username="New Webhook Username")
 
-with open("config.yml") as f:
-    config = load(f.read(), Loader=Loader)
+        embed = DiscordEmbed(
+            title="Embed Title", description="Your Embed Description", color='03b2f8'
+        )
+        embed.set_author(
+            name="Author Name",
+            url="https://github.com/lovvskillz",
+            icon_url="https://avatars0.githubusercontent.com/u/14542790",
+        )
+        embed.set_footer(text="Embed Footer Text")
+        embed.set_timestamp()
+        # Set `inline=False` for the embed field to occupy the whole line
+        embed.add_embed_field(name="Field 1", value="Lorem ipsum", inline=False)
+        embed.add_embed_field(name="Field 2", value="dolor sit", inline=False)
+        embed.add_embed_field(name="Field 3", value="amet consetetur")
+        embed.add_embed_field(name="Field 4", value="sadipscing elitr")
 
-discord_token = config["bot"]["discord_token"]
+        webhook.add_embed(embed)
+        response = webhook.execute()
 
-client = OpenSethClient(intents=intents, config=config)
-client.run(discord_token)
+    @staticmethod
+    def edit_weebhook():
+        webhook = DiscordWebhook(url='your webhook url', content='Webhook content before edit')
+        sent_webhook = webhook.execute()
+        webhook.content = 'After Edit'
+        sleep(10)
+        sent_webhook = webhook.edit(sent_webhook)
 
+    @staticmethod
+    def delete_webhook():
+        webhook = DiscordWebhook(url='your webhook url', content='Webhook Content')
+        sent_webhook = webhook.execute()
+        sleep(10)
+        webhook.delete(sent_webhook)
+
+
+def main():
+    # This bot requires the members and reactions intents.
+    intents = discord.Intents.default()
+    intents.members = True
+    intents.reactions = True
+
+    with open("config.yml") as f:
+        config = load(f.read(), Loader=Loader)
+
+    discord_token = config["bot"]["discord_token"]
+
+    client = OpenSethClient(intents=intents, config=config)
+    client.run(discord_token)
+
+
+if __name__ == '__main__':
+    main()

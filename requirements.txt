@@ -1,3 +1,4 @@
-pyyaml
+pyyaml~=5.4.1
 discord.py
-requests
+requests~=2.24.0
+discord-webhook
