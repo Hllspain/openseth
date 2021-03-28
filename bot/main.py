@@ -85,8 +85,6 @@ class OpenSethClient(discord.Client):
         print("Remove notification for user_id {}".format(user_id))
 
 
-
-
 def main():
     # This bot requires the members and reactions intents.
     intents = discord.Intents.default()
