@@ -2,3 +2,4 @@ pyyaml~=5.4.1
 discord.py
 requests~=2.24.0
 discord-webhook
+webhook_listener
