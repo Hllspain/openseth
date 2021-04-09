@@ -5,7 +5,7 @@ import discord
 from discord.ext import commands
 
 from yaml import load
-from yaml import CLoader as Loader
+from yaml import Loader
 
 intents = discord.Intents.default()
 intents.members = True
