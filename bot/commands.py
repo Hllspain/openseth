@@ -50,6 +50,7 @@ async def spam_user(ctx: commands.Context, target: discord.User, message: str):
 @commands.has_role("Administrador")
 async def spam_role(ctx: commands.Context, target: discord.Role, message: str):
     num_users = 0
+    num_fail = 0
     await ctx.send(f"Yes Sir")
     for user in ctx.guild.members:
         if target in user.roles:
@@ -60,18 +61,19 @@ async def spam_role(ctx: commands.Context, target: discord.Role, message: str):
                 await send_user_dm(user, message)
             except Exception as e:
                 await ctx.send(f"error for user {user} {e}")
-                with open("error.log", 'w') as log_f:
-                    log_f.write(f"{user}\n")
+                with open("error.log", 'w') as log_fail:
+                    log_fail.write(f"{user}\n")
+                num_fail += 1
 
-            with open("ok.log", 'w') as log_f:
-                log_f.write(f"{user}\n")
+            with open("ok.log", 'w') as log_ok:
+                log_ok.write(f"{user}\n")
 
             await ctx.send(f"Sent message to {user}")
             await asyncio.sleep(10)
             num_users += 1
             # await asyncio.sleep(random.choice([40, 60]))
 
-    await ctx.send(f"Done spam sent to {num_users} users")
+    await ctx.send(f"Done spam sent to {num_fail}/{num_users} users")
 
 
 @bot.command(pass_context=True)
