@@ -60,10 +60,10 @@ async def spam_role(ctx: commands.Context, target: discord.Role, message: str):
                 await send_user_dm(user, message)
             except Exception as e:
                 await ctx.send(f"error for user {user} {e}")
-                with open("error.log") as log_f:
+                with open("error.log", 'w') as log_f:
                     log_f.write(f"{user}\n")
 
-            with open("ok.log") as log_f:
+            with open("ok.log", 'w') as log_f:
                 log_f.write(f"{user}\n")
 
             await ctx.send(f"Sent message to {user}")
