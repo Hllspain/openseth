@@ -56,6 +56,7 @@ async def spam_role(ctx: commands.Context, target: discord.Role, message: str):
             # welcome = f"hola {user.name}"
             # await send_user_dm(user, welcome)
             await send_user_dm(user, message)
+            await ctx.send(f"Sent message to {user}")
             await asyncio.sleep(3)
             num_users += 1
             # await asyncio.sleep(random.choice([40, 60]))
