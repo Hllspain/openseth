@@ -25,7 +25,7 @@ async def send_user_dm(user, message):
     try:
         await user.send(message)
     except AttributeError as e:
-        with open("bot_list.log") as bot_list:
+        with open("bot_list.log", 'wa') as bot_list:
             bot_list.write(f"{user}\n")
 
 
@@ -61,11 +61,11 @@ async def spam_role(ctx: commands.Context, target: discord.Role, message: str):
                 await send_user_dm(user, message)
             except Exception as e:
                 await ctx.send(f"error for user {user} {e}")
-                with open("error.log", 'w') as log_fail:
+                with open("error.log", 'wa') as log_fail:
                     log_fail.write(f"{user}\n")
                 num_fail += 1
 
-            with open("ok.log", 'w') as log_ok:
+            with open("ok.log", 'wa') as log_ok:
                 log_ok.write(f"{user}\n")
 
             await ctx.send(f"Sent message to {user}")
