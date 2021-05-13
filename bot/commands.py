@@ -24,9 +24,9 @@ discord_token = config["bot"]["discord_token"]
 async def send_user_dm(user, message):
     try:
         await user.send(message)
-        print(message)
     except AttributeError as e:
-        print("es un bot", e)
+        with open("bot_list.log") as bot_list:
+            bot_list.write(f"{user}\n")
 
 
 @bot.command()
