@@ -3,7 +3,7 @@ import random
 from pprint import pprint
 
 import discord
-from discord import NotFound
+from discord import NotFound, Forbidden
 from discord.ext import commands
 from discord.utils import get
 
@@ -55,9 +55,19 @@ async def spam_role(ctx: commands.Context, target: discord.Role, message: str):
         if target in user.roles:
             # welcome = f"hola {user.name}"
             # await send_user_dm(user, welcome)
-            await send_user_dm(user, message)
+
+            try:
+                await send_user_dm(user, message)
+            except Exception as e:
+                await ctx.send(f"error for user {user} {e}")
+                with open("error.log") as log_f:
+                    log_f.write(f"{user}\n")
+
+            with open("ok.log") as log_f:
+                log_f.write(f"{user}\n")
+
             await ctx.send(f"Sent message to {user}")
-            await asyncio.sleep(3)
+            await asyncio.sleep(10)
             num_users += 1
             # await asyncio.sleep(random.choice([40, 60]))
 
