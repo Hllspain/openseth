@@ -43,6 +43,6 @@ async def on_member_update(before, after):
                 print(f"\t{role}")
                 await after.add_roles(role)
             
-        after.send(welcome_msg)
+        await after.send(welcome_msg)
 
 client.run(discord_token)
