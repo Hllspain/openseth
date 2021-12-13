@@ -5,6 +5,7 @@ from discord.utils import get
 
 from yaml import load
 from yaml import Loader
+from autobahn.wamp.gen.wamp.proto.Welcome import Welcome
 
 with open("config.yml") as f:
     config = load(f.read(), Loader=Loader)
@@ -12,6 +13,7 @@ with open("config.yml") as f:
 discord_token = config["bot"]["discord_token"]
 guild_id = config["bot"]["guild"]
 roles_id = config["bot"]["roles"]
+welcome_msg = config["bot"]["welcome"]
 
 intents = discord.Intents.default()
 intents.typing = False
@@ -42,5 +44,6 @@ async def on_member_update(before, after):
                 print(f"\t{role}")
                 await after.add_roles(role)
             
+        after.send(welcome_msg)
 
 client.run(discord_token)
