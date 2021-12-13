@@ -5,7 +5,6 @@ from discord.utils import get
 
 from yaml import load
 from yaml import Loader
-from autobahn.wamp.gen.wamp.proto.Welcome import Welcome
 
 with open("config.yml") as f:
     config = load(f.read(), Loader=Loader)
