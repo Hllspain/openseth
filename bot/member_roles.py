@@ -22,24 +22,25 @@ intents.members = True
 
 
 client = discord.Client(intents=intents)
+    
+channel = client.get_channel(log_chat_id)
+guild = client.get_guild(guild_id)
 
 @client.event
 async def on_ready():
-    print('We have logged in as {0.user}'.format(client))
+    await channel.sendprint(f"We have logged in as {client.user}")
 
 
 @client.event
 async def on_member_update(before, after):
     
-    channel = client.get_channel(log_chat_id)
-    
     if before.pending == True and after.pending == False:
         
         t = time.localtime()
         current_time = time.strftime("%H:%M:%S", t)
+        
         await channel.send(f"{current_time} Adding {after} new role")
         
-        guild = client.get_guild(guild_id)
         for role_id in roles_id:
             role = get(guild.roles, id=role_id)
         
