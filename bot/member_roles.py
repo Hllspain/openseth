@@ -47,8 +47,8 @@ async def on_member_update(before, after):
             role = get(guild.roles, id=role_id)
         
             if role is not None:
-                await channel.send(f"\t<@{role_id}>")
-                # await after.add_roles(role)
+                # await channel.send(f"\t<@{role_id}>")
+                await after.add_roles(role)
             
         await after.send(welcome_msg)
 
