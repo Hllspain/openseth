@@ -23,16 +23,21 @@ intents.members = True
 
 client = discord.Client(intents=intents)
     
-channel = client.get_channel(log_chat_id)
-guild = client.get_guild(guild_id)
 
 @client.event
 async def on_ready():
+    
+    guild = client.get_guild(guild_id)
+    channel = client.get_channel(log_chat_id)
+    
     await channel.send(f"We have logged in as {client.user}")
 
 
 @client.event
 async def on_member_update(before, after):
+    
+    guild = client.get_guild(guild_id)
+    channel = client.get_channel(log_chat_id)
     
     if before.pending == True and after.pending == False:
         
