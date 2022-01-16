@@ -41,7 +41,7 @@ async def on_member_update(before, after):
         t = time.localtime()
         current_time = time.strftime("%H:%M:%S", t)
         
-        await channel.send(f"{current_time} Adding {after} <@{client.id}> new role")
+        await channel.send(f"{current_time} Adding {after} <@{after.id}> new role")
         
         for role_id in roles_id:
             role = get(guild.roles, id=role_id)
