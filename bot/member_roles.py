@@ -28,7 +28,7 @@ guild = client.get_guild(guild_id)
 
 @client.event
 async def on_ready():
-    await channel.sendprint(f"We have logged in as {client.user}")
+    await channel.send(f"We have logged in as {client.user}")
 
 
 @client.event
