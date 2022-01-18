@@ -33,7 +33,10 @@ async def on_ready():
 @client.event
 async def on_member_remove(member):
     channel = client.get_channel(log_chat_id)
-    await channel.send(f"{member} Se fue).")
+        
+    t = time.localtime()
+    current_time = time.strftime("%H:%M:%S", t)
+    await channel.send(f"{current_time} Membro <@{member.id}> se fue.")
 
 @client.event
 async def on_member_update(before, after):
