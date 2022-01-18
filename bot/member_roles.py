@@ -27,8 +27,13 @@ client = discord.Client(intents=intents)
 @client.event
 async def on_ready():
     channel = client.get_channel(log_chat_id)
-    await channel.send(f"We have logged in as {client.user}")
+    await channel.send(f"Bot Iniciado como {client.user}")
 
+
+@client.event
+async def on_member_remove(member):
+    channel = client.get_channel(log_chat_id)
+    await channel.send(f"{member} Se fue).")
 
 @client.event
 async def on_member_update(before, after):
