@@ -36,7 +36,7 @@ async def on_member_remove(member):
         
     t = time.localtime()
     current_time = time.strftime("%H:%M:%S", t)
-    await channel.send(f"{current_time} Membro <@{member.id}> se fue.")
+    await channel.send(f"{current_time} Membro <@{member.id}> {member} se fue.")
 
 @client.event
 async def on_member_update(before, after):
