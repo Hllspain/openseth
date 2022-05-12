@@ -12,7 +12,7 @@ with open("config.yml") as f:
 discord_token = config["bot"]["discord_token"]
 guild_id = config["bot"]["guild"]
 log_chat_id = config["bot"]["chat_id"]
-welcome_chat_id = config["bot"]["welcom_chat_id"]
+welcome_chat_id = config["bot"]["welcome_chat_id"]
 roles_id = config["bot"]["roles"]
 welcome_msg = config["bot"]["welcome"]
 
