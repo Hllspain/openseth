@@ -12,6 +12,7 @@ with open("config.yml") as f:
 discord_token = config["bot"]["discord_token"]
 guild_id = config["bot"]["guild"]
 log_chat_id = config["bot"]["chat_id"]
+welcome_chat_id = config["bot"]["welcom_chat_id"]
 roles_id = config["bot"]["roles"]
 welcome_msg = config["bot"]["welcome"]
 
@@ -43,6 +44,7 @@ async def on_member_update(before, after):
     
     guild = client.get_guild(guild_id)
     channel = client.get_channel(log_chat_id)
+    welcome = client.get_channel(welcome_chat_id)
     
     if before.pending == True and after.pending == False:
         
@@ -57,7 +59,8 @@ async def on_member_update(before, after):
             if role is not None:
                 # await channel.send(f"\t<@{role_id}>")
                 await after.add_roles(role)
-            
-        await after.send(welcome_msg)
+        
+        await welcome_chat_id.send(f"Bienvenido <@{after.id}>")
+        # await after.send(welcome_msg)
 
 client.run(discord_token)
