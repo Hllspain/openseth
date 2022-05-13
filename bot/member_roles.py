@@ -62,7 +62,6 @@ async def on_member_update(before, after):
                 await after.add_roles(role)
 
         await channel.send(f"{current_time} --> Nuevo miembro <@{after.id}>")
-        await welcome_chat_id.send(welcome_msg)
-        # await after.send(welcome_msg)
+        await welcome.send(welcome_msg)
 
 client.run(discord_token)
