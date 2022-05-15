@@ -17,7 +17,8 @@ log_chat_id = config["bot"]["chat_id"]
 welcome_chat_id = config["bot"]["welcome_chat_id"]
 
 roles_id = config["bot"]["roles"]
-welcome_msg = config["bot"]["welcome"]
+welcome_msg = config["bot"]["welcome_msg"]
+boot_msg = config["bot"]["boot_msg"]
 
 intents = discord.Intents.default()
 intents.typing = False
@@ -31,7 +32,7 @@ client = discord.Client(intents=intents)
 @client.event
 async def on_ready():
     channel = client.get_channel(log_chat_id)
-    await channel.send(f"Bot Iniciado como {client.user}")
+    await channel.send(eval(boot_msg))
 
 
 @client.event
@@ -47,7 +48,7 @@ async def on_member_update(before, after):
     
     guild = client.get_guild(guild_id)
     channel = client.get_channel(log_chat_id)
-    welcome = client.get_channel(welcome_chat_id)
+    welcome_room = client.get_channel(welcome_chat_id)
     
     if before.pending == True and after.pending == False:
         
@@ -62,6 +63,6 @@ async def on_member_update(before, after):
                 await after.add_roles(role)
 
         await channel.send(f"{current_time} --> Nuevo miembro <@{after.id}>")
-        await welcome.send(welcome_msg)
+        await welcome_room.send(eval(welcome_msg))
 
 client.run(discord_token)
